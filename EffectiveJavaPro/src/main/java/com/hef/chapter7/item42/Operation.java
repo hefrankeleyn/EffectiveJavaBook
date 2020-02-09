@@ -1,6 +1,13 @@
 package com.hef.chapter7.item42;
 
+import com.hef.chapter7.item46.WorldCount;
+
+import java.util.Map;
 import java.util.function.DoubleBinaryOperator;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+
 
 /**
  * @Date 2020/2/3
@@ -23,6 +30,9 @@ public enum Operation {
     public String toString() {
         return this.symbol;
     }
+
+    private static final Map<String, Operation> stringToEnum =
+            Stream.of(values()).collect(Collectors.toMap(Object::toString, e-> e));
 
     public double apply(double x, double y){
         return op.applyAsDouble(x, y);
