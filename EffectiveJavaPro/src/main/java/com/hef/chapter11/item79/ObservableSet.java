@@ -25,11 +25,22 @@ public class ObservableSet<E> extends ForwardingSet<E> {
         }
     }
 
-    private void notifyElementAdded(E element){
+/*    private void notifyElementAdded(E element){
         synchronized (observers){
             for (SetObserver<E> observer : observers) {
                 observer.added(this, element);
             }
+        }
+    }*/
+
+    // 将外来的方法移出同步代码块
+    private void notifyElementAdded(E element){
+        List<SetObserver<E>> snapshot = null;
+        synchronized (observers){
+            snapshot = new ArrayList<>(observers);
+        }
+        for (SetObserver<E> observer : snapshot) {
+            observer.added(this, element);
         }
     }
 
